@@ -58,7 +58,7 @@ export function NavbarClient({ profile }: NavbarClientProps) {
           <div className="flex items-center gap-2 truncate">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-400 shrink-0" />
             <span className="font-semibold text-white tracking-wide">
-              UNIVERSITAS STIKUBANK (UNISBANK) SEMARANG
+              UNIVERSITAS PILOT TERBANG NGAWI
             </span>
             <span className="text-slate-500 hidden sm:inline">•</span>
             <span className="text-slate-400 hidden sm:inline truncate">

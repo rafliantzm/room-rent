@@ -19,9 +19,9 @@ const crimson = Crimson_Pro({
 });
 
 export const metadata: Metadata = {
-  title: "SPRK — Sistem Peminjaman Ruangan Kampus UNISBANK",
+  title: "SPRK — Sistem Peminjaman Ruangan Kampus Universitas Pilot Terbang Ngawi",
   description:
-    "Portal Resmi Peminjaman Ruangan Akademik Universitas Stikubank (UNISBANK) Semarang — Jadwal ketersediaan transparan, pengajuan terstruktur, dan persetujuan terverifikasi.",
+    "Portal Resmi Peminjaman Ruangan Akademik Universitas Pilot Terbang Ngawi — Jadwal ketersediaan transparan, pengajuan terstruktur, dan persetujuan terverifikasi.",
 };
 
 export const dynamic = "force-dynamic";
@@ -47,7 +47,7 @@ export default function RootLayout({
               <div>
                 <p className="font-bold text-slate-900 text-sm tracking-tight flex items-center gap-1.5">
                   SPRK <span className="text-slate-400 font-normal text-xs">|</span>
-                  <span className="font-medium text-slate-600 text-xs">Universitas Stikubank Semarang</span>
+                  <span className="font-medium text-slate-600 text-xs">Universitas Pilot Terbang Ngawi</span>
                 </p>
                 <p className="text-[11px] text-slate-500 font-normal">
                   Sistem Informasi Pengelolaan Fasilitas & Peminjaman Ruangan Kampus
@@ -61,7 +61,7 @@ export default function RootLayout({
                 Layanan Fasilitas: 07.00 – 21.00 WIB
               </span>
               <span className="text-slate-300 hidden sm:inline">•</span>
-              <span>Hak Cipta © 2026 UNISBANK Semarang. Hak cipta dilindungi.</span>
+              <span>Hak Cipta © 2026 Universitas Pilot Terbang Ngawi. Hak cipta dilindungi.</span>
             </div>
           </div>
         </footer>

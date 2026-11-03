@@ -43,7 +43,7 @@ async function RuanganContent({
             <BuildingIcon className="w-3.5 h-3.5 text-blue-400" />
             <span>DIREKTORI FASILITAS AKADEMIK</span>
             <span className="w-1 h-1 rounded-full bg-blue-400" />
-            <span className="text-amber-300 font-mono text-[11px]">UNISBANK</span>
+            <span className="text-amber-300 font-mono text-[11px]">PILOT TERBANG NGAWI</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight font-sans">

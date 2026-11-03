@@ -45,7 +45,7 @@ async function LoginContent({
           </div>
           <div>
             <span className="text-[10px] font-mono font-bold tracking-widest uppercase text-blue-900 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-200/80">
-              PORTAL AKADEMIK UNISBANK
+              PORTAL AKADEMIK UNIVERSITAS PILOT TERBANG NGAWI
             </span>
             <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-2.5">
               Masuk ke SPRK
