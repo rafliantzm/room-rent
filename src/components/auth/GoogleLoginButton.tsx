@@ -56,7 +56,7 @@ export function GoogleLoginButton({ redirectTo }: GoogleLoginButtonProps) {
         type="button"
         onClick={handleGoogleLogin}
         disabled={loading}
-        className="w-full flex items-center justify-center gap-3 px-5 py-3 bg-white border border-slate-300 hover:border-slate-400 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 disabled:opacity-60 disabled:cursor-not-allowed shadow-xs transition-all"
+        className="w-full flex items-center justify-center gap-3 px-5 py-3.5 bg-white border border-slate-300/90 hover:border-slate-400 rounded-2xl text-sm font-bold text-slate-800 hover:bg-slate-50/80 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed shadow-xs hover:shadow-sm transition-all duration-200 cursor-pointer"
       >
         {/* Official Google 'G' Icon */}
         <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">

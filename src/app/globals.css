@@ -4,48 +4,149 @@
   --background: #f8fafc;
   --surface: #ffffff;
   --foreground: #0f172a;
-  --muted: #64748b;
+  --muted: #475569;
+  --muted-light: #64748b;
   --border: #e2e8f0;
-  --primary: #1d4ed8;
-  --primary-hover: #1e40af;
+  --border-strong: #cbd5e1;
+  --primary: #1e3a5f;
+  --primary-accent: #2563eb;
+  --primary-hover: #1d4ed8;
+  --gold-seal: #b45309;
   --ring: #2563eb;
+
+  /* Huashu Design Physics-based Easing */
+  --ease-physics: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quad: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--font-jakarta), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-wrap: pretty;
 }
 
-/* Accessible & sharp focus indicator */
+/* Typography Utility Classes */
+.font-display {
+  font-family: var(--font-crimson), Georgia, Cambria, "Times New Roman", Times, serif;
+}
+
+.font-sans {
+  font-family: var(--font-jakarta), system-ui, -apple-system, sans-serif;
+}
+
+/* Accessible & Sharp Focus Indicator (UI/UX Pro Max WCAG 4.5:1 Requirement) */
 *:focus-visible {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
 
-/* Subtle transitions for buttons and cards */
+/* Physics-based transitions for buttons and links */
 button, a {
   transition-property: color, background-color, border-color, box-shadow, opacity, transform;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  transition-duration: 150ms;
+  transition-timing-function: var(--ease-physics);
+  transition-duration: 200ms;
 }
 
-/* Modern Card Utilities */
+/* Academic Card System (Swiss Modernism 2.0) */
 .academic-card {
   background-color: #ffffff;
-  border: 1px solid rgba(226, 232, 240, 0.9);
-  border-radius: 0.75rem;
-  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02);
+  transition: all 250ms var(--ease-physics);
 }
 
 .academic-card-hover {
-  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 300ms var(--ease-physics);
 }
 
 .academic-card-hover:hover {
-  border-color: rgba(147, 197, 253, 0.8);
-  box-shadow: 0 4px 6px -1px rgba(15, 23, 42, 0.07), 0 2px 4px -2px rgba(15, 23, 42, 0.05);
-  transform: translateY(-1px);
+  border-color: rgba(147, 197, 253, 0.85);
+  box-shadow: 0 12px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(15, 23, 42, 0.04);
+  transform: translateY(-2px);
+}
+
+/* Floating Segmented Nav Container */
+.academic-nav-container {
+  background: rgba(241, 245, 249, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 232, 240, 0.85);
+  border-radius: 9999px;
+  padding: 0.25rem;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.03);
+}
+
+/* Motion Keyframes (from huashu-design animation best practices) */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.65;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 400ms var(--ease-physics) both;
+}
+
+.animate-fade-in {
+  animation: fadeIn 300ms var(--ease-physics) both;
+}
+
+.animate-slide-down {
+  animation: slideDown 250ms var(--ease-physics) both;
+}
+
+.animate-pulse-subtle {
+  animation: pulseSubtle 2.5s infinite ease-in-out;
+}
+
+/* Accessibility: Respect Reduced Motion (UI/UX Pro Max rule) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

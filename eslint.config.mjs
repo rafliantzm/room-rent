@@ -13,6 +13,7 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
     "ui-ux-pro-max-skill-main/**",
+    "huashu-design/**",
   ]),
 ]);
 

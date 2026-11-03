@@ -36,36 +36,43 @@ async function RuanganContent({
         </div>
       )}
 
-      {/* Hero Banner Section */}
-      <section className="relative rounded-2xl bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white p-6 sm:p-8 md:p-10 shadow-sm border border-slate-800 overflow-hidden">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-blue-500/20 text-blue-200 border border-blue-400/20 text-[11px] font-semibold tracking-wide">
-            <BuildingIcon className="w-3.5 h-3.5" />
-            <span>FASILITAS AKADEMIK KAMPUS</span>
+      {/* Hero Banner Section (Swiss Modernism 2.0 & Academic Prestige) */}
+      <section className="relative rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950 text-white p-7 sm:p-10 md:p-12 shadow-md border border-slate-800/80 overflow-hidden">
+        <div className="relative z-10 max-w-3xl space-y-4">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/15 text-blue-300 border border-blue-400/25 text-xs font-semibold tracking-wide">
+            <BuildingIcon className="w-3.5 h-3.5 text-blue-400" />
+            <span>DIREKTORI FASILITAS AKADEMIK</span>
+            <span className="w-1 h-1 rounded-full bg-blue-400" />
+            <span className="text-amber-300 font-mono text-[11px]">UNISBANK</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-white leading-tight">
-            Peminjaman Ruangan Kuliah & Pertemuan
+          <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white leading-tight font-sans">
+            Peminjaman Ruangan Kuliah, Lab & Pertemuan
           </h1>
 
-          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-            Periksa ketersediaan jadwal terpakai, ketahui kapasitas dan fasilitas ruangan, lalu ajukan permohonan peminjaman dengan melampirkan surat permohonan resmi secara mudah.
+          <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-2xl">
+            Akses ketersediaan jadwal terpakai secara transparan, periksa spesifikasi fasilitas, dan ajukan peminjaman kegiatan akademik dengan melampirkan berkas surat permohonan resmi secara terverifikasi.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-3">
             <Link
               href="/panduan"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 hover:bg-white/20 text-white text-xs font-semibold rounded-lg backdrop-blur-md transition-colors border border-white/20"
+              className="inline-flex items-center gap-2 px-4.5 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs font-bold rounded-xl backdrop-blur-md transition-all duration-200 border border-white/20 hover:scale-[1.02] active:scale-[0.98] shadow-xs"
             >
-              <span>Pelajari Alur Panduan</span>
+              <span>Pelajari Alur & Persyaratan</span>
               <ArrowRightIcon className="w-3.5 h-3.5" />
             </Link>
+
+            <div className="hidden sm:flex items-center gap-2 text-xs text-slate-400 pl-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse-subtle" />
+              <span>Jadwal Operasional 07.00 – 21.00 WIB</span>
+            </div>
           </div>
         </div>
 
-        {/* Subtle decorative background circles */}
-        <div className="absolute -right-12 -bottom-12 w-64 h-64 bg-blue-600/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute right-32 -top-12 w-48 h-48 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
+        {/* Ambient academic lighting accents */}
+        <div className="absolute -right-16 -bottom-16 w-80 h-80 bg-blue-600/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute right-40 -top-16 w-60 h-60 bg-indigo-500/10 rounded-full blur-2xl pointer-events-none" />
       </section>
 
       {/* Search and Results Summary Bar */}
