@@ -13,6 +13,7 @@ import {
   CalendarIcon,
   InfoIcon,
   CampusEmblemIcon,
+  LayersIcon,
 } from "@/components/ui/Icons";
 
 interface RoomDetailPageProps {
@@ -149,7 +150,7 @@ async function RoomDetailContent({
 
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 text-center sm:text-left">
                   <div className="flex items-center justify-center sm:justify-start gap-1.5 text-slate-400 text-xs font-medium mb-1">
-                    <span className="text-xs font-bold text-indigo-600">L</span>
+                    <LayersIcon className="w-4 h-4 text-indigo-600" />
                     <span className="hidden sm:inline">Lantai</span>
                   </div>
                   <p className="text-sm font-bold text-slate-900 truncate">{room.floor}</p>
