@@ -33,7 +33,7 @@ export async function createBookingAction(input: BookingFormInput): Promise<Acti
 
     const supabase = await createClient();
 
-    // 2. Call the atomic PostgreSQL RPC function with mandatory letter_path
+    // 2. Call the atomic PostgreSQL RPC function with mandatory letter_path and borrower identity
     const { data: newBooking, error } = await supabase.rpc("create_booking", {
       p_room_id: validData.room_id,
       p_start_at: startIso,
@@ -42,6 +42,8 @@ export async function createBookingAction(input: BookingFormInput): Promise<Acti
       p_participant_count: validData.participant_count,
       p_request_key: validData.request_key,
       p_letter_path: validData.letter_path,
+      p_borrower_name: validData.borrower_name,
+      p_borrower_nim: validData.borrower_nim,
     });
 
     if (error) {

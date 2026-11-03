@@ -114,10 +114,10 @@ async function AdminPeminjamanContent({
                           </div>
                           <div>
                             <div className="font-bold text-slate-900 text-xs">
-                              {booking.user_profile?.full_name || "Pengguna Kampus"}
+                              {booking.borrower_name || booking.user_profile?.full_name || "Pengguna Kampus"}
                             </div>
                             <div className="text-[11px] text-slate-500 font-mono">
-                              {booking.user_profile?.email || "-"}
+                              {booking.borrower_nim ? `NIM: ${booking.borrower_nim} • ` : ""}{booking.user_profile?.email || "-"}
                             </div>
                           </div>
                         </div>

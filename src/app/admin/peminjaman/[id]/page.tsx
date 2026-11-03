@@ -107,15 +107,21 @@ async function AdminBookingDetailContent({ params }: AdminBookingDetailPageProps
         )}
 
         {/* Applicant Identity Card */}
-        <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-2">
+        <div className="p-4 bg-slate-50/80 rounded-xl border border-slate-200/80 space-y-3">
           <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
             Identitas Pemohon
           </span>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
             <div>
               <span className="text-slate-500 block">Nama Lengkap:</span>
               <span className="font-bold text-slate-900 text-sm">
-                {booking.user_profile?.full_name || "Pengguna Kampus"}
+                {booking.borrower_name || booking.user_profile?.full_name || "Belum tercatat"}
+              </span>
+            </div>
+            <div>
+              <span className="text-slate-500 block">NIM:</span>
+              <span className="font-mono font-bold text-slate-900 text-sm">
+                {booking.borrower_nim || "Belum tercatat"}
               </span>
             </div>
             <div>

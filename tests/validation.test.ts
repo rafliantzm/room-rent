@@ -95,17 +95,91 @@ describe("PRD Validation Schemas (v1.2)", () => {
   });
 
   describe("Booking Submission Schema (FR-04, BR-03 to BR-07, BR-19)", () => {
-    const { minDate } = getBookingDateBounds();
+    const { maxDate } = getBookingDateBounds();
     const validBooking = {
-      room_id: "a0000000-0000-0000-0000-000000000001",
-      date: minDate,
+      room_id: "a0000000-0000-4000-8000-000000000001",
+      borrower_name: "Aditya Bagas",
+      borrower_nim: "24.01.53.0003",
+      date: maxDate,
       start_time: "14:00",
       end_time: "16:00",
       purpose: "Rapat koordinasi praktikum algoritma semester ganjil",
       participant_count: 25,
-      request_key: "b0000000-0000-0000-0000-000000000002",
-      letter_path: "user-123/b0000000-0000-0000-0000-000000000002.pdf",
+      request_key: "b0000000-0000-4000-8000-000000000002",
+      letter_path: "user-123/b0000000-0000-4000-8000-000000000002.pdf",
     };
+
+    it("should accept valid booking input with borrower name and NIM", () => {
+      const result = bookingFormSchema.safeParse(validBooking);
+      expect(result.success).toBe(true);
+      if (result.success) {
+        expect(result.data.borrower_name).toBe("Aditya Bagas");
+        expect(result.data.borrower_nim).toBe("24.01.53.0003");
+      }
+    });
+
+    it("should accept NIM with dot, hyphen, or alphanumeric", () => {
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "24.01.53.0003" }).success
+      ).toBe(true);
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "24-01-53-0003" }).success
+      ).toBe(true);
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "A1220260001" }).success
+      ).toBe(true);
+    });
+
+    it("should reject submission without borrower_name or name < 3 characters", () => {
+      const withoutName = { ...validBooking };
+      // @ts-expect-error Testing missing mandatory borrower_name
+      delete withoutName.borrower_name;
+      expect(bookingFormSchema.safeParse(withoutName).success).toBe(false);
+
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_name: "Ad" }).success
+      ).toBe(false);
+
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_name: "   " }).success
+      ).toBe(false);
+    });
+
+    it("should reject borrower_name > 100 characters", () => {
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_name: "A".repeat(101) }).success
+      ).toBe(false);
+    });
+
+    it("should reject submission without borrower_nim or NIM < 5 characters", () => {
+      const withoutNim = { ...validBooking };
+      // @ts-expect-error Testing missing mandatory borrower_nim
+      delete withoutNim.borrower_nim;
+      expect(bookingFormSchema.safeParse(withoutNim).success).toBe(false);
+
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "1234" }).success
+      ).toBe(false);
+
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "     " }).success
+      ).toBe(false);
+    });
+
+    it("should reject borrower_nim > 25 characters", () => {
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "12345678901234567890123456" }).success
+      ).toBe(false);
+    });
+
+    it("should reject borrower_nim with invalid special characters", () => {
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "24@01#53" }).success
+      ).toBe(false);
+      expect(
+        bookingFormSchema.safeParse({ ...validBooking, borrower_nim: "24 01 53 0003" }).success
+      ).toBe(false);
+    });
 
     it("should reject submission without letter_path (BR-19)", () => {
       const withoutLetter = { ...validBooking };

@@ -37,6 +37,10 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
       : "10000000-0000-0000-0000-000000000000"
   );
 
+  // Identity state: full_name prefilled from Google, NIM entered manually
+  const [borrowerName, setBorrowerName] = useState<string>(profile.full_name || "");
+  const [borrowerNim, setBorrowerNim] = useState<string>("");
+
   const [date, setDate] = useState<string>(initialDate || minDate);
   const [startTime, setStartTime] = useState<string>("08:00");
   const [endTime, setEndTime] = useState<string>("10:00");
@@ -158,6 +162,8 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
       setUploadStatus("Menyimpan pengajuan peminjaman...");
       const result = await createBookingAction({
         room_id: room.id,
+        borrower_name: borrowerName.trim(),
+        borrower_nim: borrowerNim.trim(),
         date,
         start_time: startTime,
         end_time: endTime,
@@ -190,6 +196,11 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
 
   const isFormValid =
     !isSubmitting &&
+    borrowerName.trim().length >= 3 &&
+    borrowerName.trim().length <= 100 &&
+    borrowerNim.trim().length >= 5 &&
+    borrowerNim.trim().length <= 25 &&
+    /^[a-zA-Z0-9.\-]+$/.test(borrowerNim.trim()) &&
     Boolean(letterFile) &&
     purpose.trim().length >= 10 &&
     purpose.trim().length <= 200 &&
@@ -222,53 +233,128 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
                 Penting: Pengajuan belum mengunci ruangan secara final.
               </p>
               <p className="text-blue-800">
-                Status awal pengajuan adalah <strong className="text-blue-950 font-bold">Menunggu Persetujuan</strong>. Administrator operasional kampus akan memverifikasi kelengkapan surat resmi sebelum menyetujui jadwal Anda.
+                Status awal pengajuan adalah <strong className="text-blue-950 font-bold">Menunggu Persetujuan</strong>. Administrator operasional kampus akan memverifikasi kesesuaian identitas pemohon dan surat permohonan resmi sebelum menyetujui jadwal Anda.
               </p>
             </div>
           </div>
 
-          {/* Section 1: Data Ruangan & Pemohon */}
+          {/* Section 1: Identitas Peminjam */}
           <div className="academic-card p-6 bg-white space-y-5">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
-              <div className="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 font-bold text-xs flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">
                 1
               </div>
-              <h2 className="text-sm font-bold text-slate-900">
-                Data Pemohon & Ruangan Terpilih
-              </h2>
+              <div>
+                <h2 className="text-sm font-bold text-slate-900">
+                  Identitas Akademik Peminjam
+                </h2>
+                <span className="text-xs text-slate-500">
+                  Data resmi pemohon untuk dicocokkan dengan surat permohonan dan kartu mahasiswa.
+                </span>
+              </div>
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-lg">
-                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
-                  Nama Pemohon (Akun Google)
-                </span>
-                <p className="text-sm font-bold text-slate-900 mt-1">{profile.full_name}</p>
-                <p className="text-xs text-slate-600 mt-0.5">{profile.email}</p>
+              {/* Nama Lengkap */}
+              <div>
+                <label htmlFor="borrower-name" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Nama Lengkap Peminjam <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  id="borrower-name"
+                  type="text"
+                  value={borrowerName}
+                  onChange={(e) => setBorrowerName(e.target.value)}
+                  placeholder="Masukkan nama lengkap Anda..."
+                  required
+                  minLength={3}
+                  maxLength={100}
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Otomatis dari profil Google. Dapat disesuaikan dengan identitas akademik resmi (3–100 karakter).
+                </p>
+                {fieldErrors.borrower_name && (
+                  <p className="text-xs text-rose-600 mt-1 font-medium">{fieldErrors.borrower_name[0]}</p>
+                )}
               </div>
 
-              <div className="p-3.5 bg-slate-50 border border-slate-200/80 rounded-lg">
-                <div className="flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                    Ruangan Pilihan
-                  </span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-white border border-slate-200 text-slate-700">
+              {/* NIM */}
+              <div>
+                <label htmlFor="borrower-nim" className="block text-xs font-semibold text-slate-700 mb-1.5">
+                  Nomor Induk Mahasiswa (NIM) <span className="text-rose-500">*</span>
+                </label>
+                <input
+                  id="borrower-nim"
+                  type="text"
+                  value={borrowerNim}
+                  onChange={(e) => setBorrowerNim(e.target.value)}
+                  placeholder="Contoh: 24.01.53.0003"
+                  required
+                  minLength={5}
+                  maxLength={25}
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-lg text-sm text-slate-900 font-mono focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all"
+                />
+                <p className="text-[11px] text-slate-400 mt-1">
+                  Wajib diisi (5–25 karakter). Mendukung angka, huruf, titik, dan strip.
+                </p>
+                {fieldErrors.borrower_nim && (
+                  <p className="text-xs text-rose-600 mt-1 font-medium">{fieldErrors.borrower_nim[0]}</p>
+                )}
+              </div>
+            </div>
+
+            {/* Read-only Google Email info */}
+            <div className="p-3 bg-slate-50 border border-slate-200/80 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1 text-xs">
+              <span className="text-slate-600">
+                Email Akun Terhubung: <strong className="text-slate-900 font-mono">{profile.email}</strong>
+              </span>
+              <span className="text-[11px] text-slate-500 italic">
+                (Otomatis terikat melalui Google OAuth, tidak dapat diubah)
+              </span>
+            </div>
+          </div>
+
+          {/* Section 2: Ruangan Terpilih */}
+          <div className="academic-card p-6 bg-white space-y-4">
+            <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
+              <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">
+                2
+              </div>
+              <h2 className="text-sm font-bold text-slate-900">
+                Ruangan Terpilih
+              </h2>
+            </div>
+
+            <div className="p-4 bg-slate-50 border border-slate-200/80 rounded-lg flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <div className="flex items-center gap-2">
+                  <span className="px-2 py-0.5 rounded text-xs font-mono font-bold bg-white border border-slate-200 text-slate-800">
                     {room.code}
                   </span>
+                  <span className="text-sm font-bold text-slate-900">{room.name}</span>
                 </div>
-                <p className="text-sm font-bold text-slate-900 mt-1">{room.name}</p>
-                <p className="text-xs text-slate-600 mt-0.5">
-                  {room.building}, {room.floor} • Kapasitas maks. {room.capacity} orang
+                <p className="text-xs text-slate-600 mt-1">
+                  Lokasi: {room.building}, {room.floor}
                 </p>
+              </div>
+
+              <div className="text-left sm:text-right shrink-0">
+                <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                  Kapasitas Maksimal
+                </span>
+                <span className="text-sm font-bold text-blue-700">
+                  {room.capacity} orang
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Section 2: Jadwal & Waktu */}
+          {/* Section 3: Jadwal & Waktu */}
           <div className="academic-card p-6 bg-white space-y-5">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">
-                2
+                3
               </div>
               <h2 className="text-sm font-bold text-slate-900">
                 Waktu Pelaksanaan & Peserta
@@ -389,11 +475,11 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
             </div>
           </div>
 
-          {/* Section 3: Keperluan Agenda */}
+          {/* Section 4: Keperluan Agenda */}
           <div className="academic-card p-6 bg-white space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">
-                3
+                4
               </div>
               <h2 className="text-sm font-bold text-slate-900">
                 Keperluan & Agenda Kegiatan
@@ -434,11 +520,11 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
             </div>
           </div>
 
-          {/* Section 4: Upload Surat Wajib PDF */}
+          {/* Section 5: Upload Surat Wajib PDF */}
           <div className="academic-card p-6 bg-white space-y-4">
             <div className="flex items-center gap-2 border-b border-slate-100 pb-3">
               <div className="w-7 h-7 rounded-lg bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">
-                4
+                5
               </div>
               <div>
                 <h2 className="text-sm font-bold text-slate-900">
@@ -529,6 +615,14 @@ export function BookingForm({ room, profile, initialDate }: BookingFormProps) {
 
             <div className="space-y-3.5 text-xs">
               <div>
+                <span className="text-slate-500 block">Pemohon</span>
+                <span className="font-bold text-slate-900 text-sm">{borrowerName || "—"}</span>
+                <span className="text-slate-600 font-mono block mt-0.5">
+                  NIM: {borrowerNim || "Belum diisi"}
+                </span>
+              </div>
+
+              <div className="border-t border-slate-100 pt-3">
                 <span className="text-slate-500 block">Ruangan</span>
                 <span className="font-bold text-slate-900 text-sm">{room.name}</span>
                 <span className="text-slate-600 block">{room.building}, {room.floor}</span>

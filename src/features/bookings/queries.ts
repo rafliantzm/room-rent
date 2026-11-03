@@ -6,6 +6,8 @@ export interface BookingWithRoom {
   room_id: string;
   request_key: string;
   letter_path: string | null;
+  borrower_name?: string | null;
+  borrower_nim?: string | null;
   start_at: string;
   end_at: string;
   purpose: string;

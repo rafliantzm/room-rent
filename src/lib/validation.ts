@@ -49,6 +49,17 @@ export type RoomFormInput = z.infer<typeof roomFormSchema>;
 export const bookingFormSchema = z
   .object({
     room_id: z.string().uuid("ID ruangan tidak valid"),
+    borrower_name: z
+      .string({ message: "Nama lengkap peminjam wajib diisi" })
+      .trim()
+      .min(3, "Nama lengkap minimal 3 karakter")
+      .max(100, "Nama lengkap maksimal 100 karakter"),
+    borrower_nim: z
+      .string({ message: "NIM peminjam wajib diisi" })
+      .trim()
+      .min(5, "NIM minimal 5 karakter")
+      .max(25, "NIM maksimal 25 karakter")
+      .regex(/^[a-zA-Z0-9.\-]+$/, "NIM hanya boleh berisi huruf, angka, titik, dan tanda hubung (-)"),
     date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Format tanggal tidak valid (YYYY-MM-DD)"),
     start_time: z
       .string()
